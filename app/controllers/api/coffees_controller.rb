@@ -22,6 +22,16 @@ class Api::CoffeesController < ApplicationController
     end
   end
 
+  def update
+    @coffee = Coffee.find(params[:id])
+    if @coffee.update_attributes(coffee_params)
+      render 'index', formats: :json, handlers: 'jbuilder'
+    else
+      render json: @coffee.errors, 
+      status: :unprocessable_entity
+    end
+  end
+
     private
 
     def coffee_params
