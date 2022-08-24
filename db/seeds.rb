@@ -24,9 +24,9 @@ comments = ["おいしい", "まずまず", "美味"]
   )
 end
 
-# User.create!(
-#   user_name: 'Admin User',
-#   email: 'example@example.com',
-#   password: 'foobar',
-#   password_confirmation: 'foobar'
-# )
+User.create!(
+  name: 'Admin User',
+  email: 'example@example.com',
+  password: 'foobar',
+  password_confirmation: 'foobar'
+)
