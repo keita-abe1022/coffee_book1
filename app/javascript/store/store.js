@@ -42,5 +42,11 @@ export default new Vuex.Store({
       // ログイン時BooleanがlocalStorageに保存される
       state.signedIn = !!localStorage.signedIn
     },
+  },
+  actions: {
+    // ログイン時等において[$store.dispatch('doFetchSignedIn')]で次のメソッドを呼び出し[signedIn]を更新する
+    doFetchSignedIn({ commit }) {
+      commit('fetchSignedIn')
+    }
   }
 })
