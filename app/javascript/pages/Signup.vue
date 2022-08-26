@@ -6,7 +6,7 @@
           cols="12"
         >
         <v-text-field
-          v-model="user.user_name"
+          v-model="user.name"
           label="名前"
         >
         </v-text-field>
@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       user: {
-        user_name: '',
+        name: '',
         email: '',
         password: '',
         password_confirmation: '',
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     signUp() {
-      this.$http.plain.post('/api/signup', { user_name: this.user_name, email: this.email, password: this.password, password_confirmation: this.password_confirmation })
+      this.$http.plain.post('/api/signup', { name: this.name, email: this.email, password: this.password, password_confirmation: this.password_confirmation })
         .then(response => this.signupSuccessful(response))
         .catch(error => this.signupFailed(error))
     },

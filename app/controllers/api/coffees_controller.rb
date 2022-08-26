@@ -1,5 +1,5 @@
 class Api::CoffeesController < ApplicationController
-  protect_from_forgery :except => [:create]
+  protect_from_forgery :except => [:create, :update]
   
   def index
     @coffees = Coffee.all
@@ -39,8 +39,6 @@ class Api::CoffeesController < ApplicationController
     else
       render json: @coffee.errors, status: :unprocessable_entity
     end
-  end
-
   end
 
     private
