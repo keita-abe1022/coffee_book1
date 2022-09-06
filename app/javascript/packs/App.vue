@@ -1,6 +1,6 @@
 <template>
 <!-- 一番外に必須。 -->
-  <v-app>
+  <v-app id="app">
     <Header/>
     <v-main>
       <router-view/>

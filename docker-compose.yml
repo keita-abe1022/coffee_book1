@@ -12,10 +12,13 @@ services:
       - tmp-data:/myapp/tmp
       - log-data:/myapp/log
       - vendor-store:/myapp/vendor
+    environment:
+      REDIS_URL: redis://redis:6379
     ports:
       - '3000:3000'
     depends_on:
       - db
+      - redis
   db:
     image: mysql:5.7
     env_file:
@@ -35,6 +38,13 @@ services:
       - 80:80
     depends_on:
       - app
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    stdin_open: true
 volumes:
   bundle-data:
   public-data:
@@ -44,3 +54,4 @@ volumes:
   node_modules-store:
   vendor-store:
   node_modules:
+  redis_data:

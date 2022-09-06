@@ -15,7 +15,7 @@ class Api::SessionsController < ApplicationController
                                       secure: Rails.env.production?)
       render json: { csrf: tokens[:csrf] }
     else
-      not_autorized
+      not_authorized
     end
   end
 
