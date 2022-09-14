@@ -52,6 +52,7 @@ group :development do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'foreman'
+  gem 'spring-commands-rspec'
 end
 
 group :test do
