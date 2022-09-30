@@ -1,61 +1,93 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { FactoryBot.build(:user) }
-  let(:another_user) { FactoryBot.build{:user} }
+  before do
+    @user = FactoryBot.build(:user)
+    @another_user = FactoryBot.build(:user)
+  end
 
   describe "validation" do
     it "正常に新規登録できる" do
-      expect(user).to be_valid
-      user.save
+      expect(@user).to be_valid
+      @user.save
     end
 
     context "name" do
-      it "空白でないこと" do
-        user.name = nil
-        user.valid?
-        # expect(user.errors[:name]).to include ("can't be blank")
-        expect(user.errors.added?(:name, :blank)).to be_truthy
+      it "空白だと登録できない" do
+        @user.name = ' '
+        expect(@user).to be_invalid
+        expect(@user.errors.of_kind?(:name, :blank)).to be_truthy
       end
 
       it "20文字以内であること" do
-        user.name = 'a' * 20
-        expect(user).to be_valid
-        user.save        
+        @user.name = 'a' * 20
+        expect(@user).to be_valid
+        @user.save        
       end
 
       it "21文字以上だと登録できないこと" do
-        user.name = 'a' * 21
-        expect(user).to be_invalid
-        expect(user.errors.of_kind?(:name, :too_long)).to be_truthy
+        @user.name = 'a' * 21
+        expect(@user).to be_invalid
+        expect(@user.errors.of_kind?(:name, :too_long)).to be_truthy
       end
     end
 
     context "email" do
-      it "is invalid without an email" do
-        user = User.create(
-          name: "user1",
-          email: nil,
-          password: "foobar",
-        )
-        user.valid?
-        expect(user.errors[:email]).to include ("can't be blank")
+      it "空白だと登録できない" do
+        @user.email = ' '
+        expect(@user).to be_invalid
+        expect(@user.errors.of_kind?(:email, :blank)).to be_truthy
       end
 
-      it "is invalid with a duplicate email address" do
-        User.create(
-          name: "user1",
-          email: "user1@user1.com",
-          password: "foobar",
-        )
-        user = User.new(
-          name: "user2",
-          email: "user1@user1.com",
-          password: "foobar2",
-        )
-        user.valid?
-        expect(user.errors[:email]).to include("has already been taken")
+      it "255文字以内であること" do
+        @user.email = 'a' * 243 + '@example.com'
+        expect(@user).to be_valid
+        @user.save
+      end
+
+      it "256文字以上だと登録できない" do
+        @user.email =  'a'  * 244 + '@example.com'
+        expect(@user).to be_invalid
+        expect(@user.errors.of_kind?(:email, :too_long)).to be_truthy
+      end
+
+      it "有効な形式であること" do
+        valid_addresses =  %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org first.last@foo.jp alice+bob@baz.cn]
+        valid_addresses.each do |valid_address|
+          @user.email = valid_address
+          expect(@user).to be_valid
+        end
+        @user.save
+      end
+
+      it "無効な形式であること" do
+        invalid_addresses = %w[user@example,com user_at_foo.org user.name@example.foo@bar_baz.com foo@bar+bazz.com]
+        invalid_addresses.each do |invalid_address|
+          @user.email = invalid_address
+          expect(@user).to be_invalid
+        end
+      end
+
+      it "重複していると登録できない" do
+        @user.save
+        @another_user.email = @user.email
+        expect(@another_user).to be_invalid
+        expect(@another_user.errors.of_kind?(:email, :taken)).to be_truthy
       end
     end 
+
+    # context "password" do
+      # it "空白だと登録できない" do
+      #   @user.password = ' '
+      #   expect(@user).to be_invalid
+      #   expect(@user.errors.of_kind?(:password, :blank)).to be_truthy
+      # end
+
+      # it "password_confirmationが空白だと登録できない" do
+      #   @user.password_confirmation = nil
+      #   expect(@user).to be_invalid
+      #   expect(@user.errors.of_kind?(:password_confirmation, :blank)).to be_truthy
+      # end
+    # end
   end
 end
