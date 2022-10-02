@@ -68,6 +68,20 @@ RSpec.describe User, type: :model do
         end
       end
 
+      it "大文字小文字を区別しない一意性がある" do
+        duplicate_user = @user.dup
+        duplicate_user.email = @user.email.upcase
+        @user.save
+        expect(duplicate_user).to be_invalid
+      end
+
+      it "小文字で登録される" do
+        mixed_case_email = "Foo@Example.CoM"
+        @user.email = mixed_case_email
+        @user.save
+        expect(mixed_case_email.downcase).to eq @user.reload.email
+      end
+
       it "重複していると登録できない" do
         @user.save
         @another_user.email = @user.email
