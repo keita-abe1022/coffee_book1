@@ -76,18 +76,18 @@ RSpec.describe User, type: :model do
       end
     end 
 
-    # context "password" do
-      # it "空白だと登録できない" do
-      #   @user.password = ' '
-      #   expect(@user).to be_invalid
-      #   expect(@user.errors.of_kind?(:password, :blank)).to be_truthy
-      # end
+    context "password" do
+      it "空白だと登録できない" do
+        @user.password = @user.password_confirmation =  ' ' * 6
+        expect(@user).to be_invalid
+        expect(@user.errors.of_kind?(:password, :blank)).to be_truthy
+      end
 
-      # it "password_confirmationが空白だと登録できない" do
-      #   @user.password_confirmation = nil
-      #   expect(@user).to be_invalid
-      #   expect(@user.errors.of_kind?(:password_confirmation, :blank)).to be_truthy
-      # end
-    # end
+      it "5文字以下だと登録できない" do
+        @user.password = @user.password_confirmation = "a" * 5
+        expect(@user).to be_invalid
+        expect(@user.errors.of_kind?(:password, :too_short)).to be_truthy
+      end
+    end
   end
 end
