@@ -102,6 +102,7 @@ RSpec.describe User, type: :model do
         expect(@user).to be_invalid
         expect(@user.errors.of_kind?(:password, :too_short)).to be_truthy
       end
+
     end
   end
 end
