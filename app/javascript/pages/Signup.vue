@@ -8,21 +8,31 @@
         <v-text-field
           v-model="user.name"
           label="名前"
+          :rules= "[rules.required]"
         >
         </v-text-field>
         <v-text-field
           v-model="user.email"
           label="メールアドレス"
+          :rules= "[rules.required]"
         >
         </v-text-field>
         <v-text-field
           v-model="user.password"
           label="パスワード"
+          :rules="[rules.required]"
+          counter
         >
         </v-text-field>
         <v-text-field
           v-model="user.password_confirmation"
+          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          :rules="[rules.required, rules.min]"
+          :type="showPassword ? 'text' : 'password'"
           label="パスワードの確認"
+          hint="最低8文字以上"
+          counter
+          @click:append= "showPassword = !showPassword"
         >
         </v-text-field>
         </v-col>
@@ -44,6 +54,12 @@ export default {
         password: '',
         password_confirmation: '',
         error: ''
+      },
+      showPassword: false,
+      password: 'Password',
+      rules: {
+        required: value => !!value || '必須',
+        min: v => v.length >= 8 || '最低8文字以上'
       }
     }
   },
