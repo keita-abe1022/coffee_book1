@@ -3,7 +3,7 @@ class Api::UsersController < ApplicationController
 
   def index
     @users = User.all
-    render 'index' formats: :json, handlers: 'jbuilder'
+    render 'index', formats: :json, handlers: 'jbuilder'
   end
 
   def show
