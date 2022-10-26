@@ -11,6 +11,7 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import VueAxios from 'vue-axios'
 import { securedAxiosInstance, plainAxiosInstance } from '../backend/axios/axios.js'
+import '@mdi/font/css/materialdesignicons.css'
 
 Vue.use(Vuetify)
 const vuetify = new Vuetify();
@@ -28,6 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
     vuetify,
     securedAxiosInstance,
     plainAxiosInstance,
+    icons: {
+      iconfont: 'mdi',
+    },
     render: h => h(App)
   }).$mount()
   document.body.appendChild(app.$el)

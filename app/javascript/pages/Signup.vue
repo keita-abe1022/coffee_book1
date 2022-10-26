@@ -56,10 +56,9 @@ export default {
         error: ''
       },
       showPassword: false,
-      password: 'Password',
       rules: {
         required: value => !!value || '必須',
-        min: v => v.length >= 8 || '最低8文字以上'
+        min: v => v.length >= 8 || '8文字以上'
       }
     }
   },

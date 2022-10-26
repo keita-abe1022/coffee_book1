@@ -20,6 +20,7 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "@mdi/font": "^7.0.96",
     "@webpack-cli/serve": "^1.7.0",
     "webpack-dev-server": "^3.8.0"
   }
