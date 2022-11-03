@@ -8,11 +8,13 @@
         <v-text-field
         v-model="user.email"
         label="メールアドレス"
+        outlined
         >
         </v-text-field>
         <v-text-field
         v-model="user.password"
         label="パスワード"
+        outlined
         >
         </v-text-field>
         </v-col>
